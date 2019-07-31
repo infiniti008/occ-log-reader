@@ -5,9 +5,18 @@ git clone https://gitlab.com/vyacheslav_nikitenok/occ-log-reader.git
 ```
 ## Installing dependencies
 ```
-cd occ-log-reader && npm i
+cd occ-log-reader/src
+
+npm i
+
+cd ..
 ```
-## Configuring the application
+## Run application
+```
+Double click on occ-log-reader/start.bat
+```
+#OR
+## Manual configuring the application
 * Open _config.json_ file
 * Specify admin _host_
   * Format: _https://ccadmin-***.oracleoutsourcing.com_
@@ -20,8 +29,14 @@ cd occ-log-reader && npm i
   * Default is current date
   * Format: _YYYYMMDD_
   * Example: _20190731_
-## Reading logs
+* Specify default _editor_
+  * atom
+  * code
+  * nothing
+  * default
+  * don't open
+## Manual reading logs
 ```
-node index
+node src/index
 ```
 ## Logs will insert to the _log.log_ file. Open this file with code editor eg. Atom, VS Code, Web Storm, IDE.
