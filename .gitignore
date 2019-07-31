@@ -1,4 +1,5 @@
 node_modules
 log.json
 log.log
-token.json
+package-lock.json
+config.json
