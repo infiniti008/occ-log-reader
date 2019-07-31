@@ -5,9 +5,7 @@ git clone https://gitlab.com/vyacheslav_nikitenok/occ-log-reader.git
 ```
 ## Installing dependencies
 ```
-cd occ-log-reader
-
-npm i
+cd occ-log-reader && npm i
 ```
 ## Configuring the application
 * Open _config.json_ file
