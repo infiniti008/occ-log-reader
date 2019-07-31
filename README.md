@@ -15,7 +15,8 @@ cd ..
 ```
 Double click on occ-log-reader/start.bat
 ```
-#OR
+# OR
+
 ## Manual configuring the application
 * Open _config.json_ file
 * Specify admin _host_
