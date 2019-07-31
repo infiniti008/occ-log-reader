@@ -5,6 +5,8 @@ git clone https://gitlab.com/vyacheslav_nikitenok/occ-log-reader.git
 ```
 ## Installing dependencies
 ```
+cd occ-log-reader
+
 npm i
 ```
 ## Configuring the application
@@ -20,3 +22,8 @@ npm i
   * Default is current date
   * Format: _YYYYMMDD_
   * Example: _20190731_
+## Reading logs
+```
+node index
+```
+## Logs will insert to the _log.log_ file.
