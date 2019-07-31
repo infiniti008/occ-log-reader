@@ -1,0 +1,14 @@
+{
+  "name": "occ-log-reader",
+  "version": "0.9.0",
+  "description": "Reading logs from OCC environment.",
+  "main": "index.js",
+  "scripts": {
+    "log": "node index"
+  },
+  "author": "Vyacheslav Nikitenok",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
