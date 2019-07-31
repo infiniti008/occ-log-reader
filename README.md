@@ -26,4 +26,4 @@ npm i
 ```
 node index
 ```
-## Logs will insert to the _log.log_ file.
+## Logs will insert to the _log.log_ file. Open this file with code editor eg. Atom, VS Code, Web Storm, IDE.
