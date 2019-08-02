@@ -1,25 +1,43 @@
 # OCC Logs Reader
-## Cloning the NodeJS application
-```
-git clone https://gitlab.com/vyacheslav_nikitenok/occ-log-reader.git
-```
-## Installing dependencies
-```
-cd occ-log-reader/src
+## 1. Get application
+* ### Load file
+    ```
+    Load *.zip
+    ```
+* ### By console
+    ```
+    git clone https://gitlab.com/vyacheslav_nikitenok/occ-log-reader.git
+    ```
+## 2. Install dependencies
+* ### Automatical
+    ```
+    Run INSTALL.bat
+    ```
+* ### By console
+    ```
+    cd occ-log-reader/src
 
-npm i
+    npm i
 
-cd ..
-```
-## Run application
-```
-Double click on occ-log-reader/start.bat
+    cd ..
+    ```
+## 3. Run application
+Leave input empty to use saved option. Logs will insert to the _log.log_ file. Open this file with code editor eg. Atom, VS Code, Web Storm, IDE.
+* ### Automatical
+    ```
+    Run occ-log-reader/START.bat
+    ```
 
-Leave input empty to use saved option.
-```
-# OR
+* ### By console
+    ```
+    node src/index
+    ```
+    or
+    ```
+    ./START.bat
+    ```
 
-## Manual configuring the application
+### 4. Manual configuring the application
 * Open _config.json_ file
 * Specify admin _host_
   * Format: _https://ccadmin-***.oracleoutsourcing.com_
@@ -38,12 +56,3 @@ Leave input empty to use saved option.
   * nothing
   * default
   * don't open
-## Manual reading logs
-```
-node src/index
-
-or
-
-./start.bat
-```
-## Logs will insert to the _log.log_ file. Open this file with code editor eg. Atom, VS Code, Web Storm, IDE.

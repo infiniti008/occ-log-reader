@@ -1,30 +1,26 @@
-const chalk = require("chalk");
-const figlet = require("figlet");
-const inquirer = require("inquirer");
-const open = require('open');
-const fs = require('fs');
+try{
+  var chalk = require("chalk");
+  var figlet = require("figlet");
+  var inquirer = require("inquirer");
+  var open = require('open');
+  var fs = require('fs');
+}
+catch(err){
+  setTimeout(() => {}, 4000);
+  console.error("\r\nPlease run INSTALL.bat\r\n");
+}
+
 const reader = require(__dirname + '/read');
 
-const CONFIG_PATH = __dirname + '/config.json';
+const CONFIG_PATH = __dirname + '/../config.json';
 const LOG_PATH = __dirname + '/../log.log';
 
 let currentConfig = require(CONFIG_PATH);
 
-const init = () => {
+const printLogo = (text, color) => {
   console.log(
-    chalk.white(
-      figlet.textSync("/ OCC  LOGS by VN  /", {
-        horizontalLayout: "default",
-        verticalLayout: "default"
-      })
-    )
-  );
-};
-
-const openInLogo = () => {
-  console.log(
-    chalk.white(
-      figlet.textSync("/ Open in Your editor /", {
+    chalk[color](
+      figlet.textSync(text, {
         horizontalLayout: "default",
         verticalLayout: "default"
       })
@@ -205,7 +201,7 @@ const askQuestions = () => {
 
 const run = async () => {
 
-  init();
+  printLogo("/ OCC  LOGS by VN  /", "white")
 
   const answers = await askQuestions();
 
@@ -219,29 +215,15 @@ const run = async () => {
 
   if(readFinished){
     if(currentConfig.editor){
-      openInLogo();
+      printLogo("/ Open in Your editor /", "white");
       await open(LOG_PATH, { wait: false, app: currentConfig.editor });
     }
     else{
-      console.log(
-        chalk.green(
-          figlet.textSync("/ Look at  _ log.log _  file /", {
-            horizontalLayout: "default",
-            verticalLayout: "default"
-          })
-        )
-      )
+      printLogo("/ Look at  _ log.log _  file /", "green");
     }
   }
   else {
-    console.log(
-      chalk.red(
-        figlet.textSync("/ Erorr /", {
-          horizontalLayout: "default",
-          verticalLayout: "default"
-        })
-      )
-    )
+    printLogo("/ Erorr /", "red");
   }
 
   
