@@ -37,14 +37,21 @@ const askQuestions = () => {
   var isDefault = { value: false };
 
   function changeIsDefault(val){
-    if(val === 'Yes'){
-      isDefault.value = true;
-      return true;
+    if(currentConfig.host){
+      if(val === 'Yes'){
+        isDefault.value = true;
+        return true;
+      }
+      else if(val === 'No'){
+        isDefault.value = false;
+        return false;
+      }
     }
-    else if(val === 'No'){
+    else {
       isDefault.value = false;
       return false;
     }
+    
   }
 
   function getIsDefault(){
@@ -185,7 +192,8 @@ const askQuestions = () => {
     },
     {
       name: "save",
-      type: "confirm",
+      type: "list",
+      choices: ["No", "Yes"],
       message: "Do we need to save current options to the config? # ",
       when: function () {
         return !getIsDefault();
@@ -201,26 +209,42 @@ const run = async () => {
 
   const answers = await askQuestions();
 
-  if(answers.save){
+  if(answers.save === "Yes"){
+    console.log("Config saved");
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(currentConfig))
   }
 
-  let readFinished = await reader(currentConfig)
+  let readFinished = await reader(currentConfig);
+  setTimeout(() => {}, 4000);
 
-  if(currentConfig.editor){
-    openInLogo();
-    await open(LOG_PATH, { wait: false, app: currentConfig.editor });
+  if(readFinished){
+    if(currentConfig.editor){
+      openInLogo();
+      await open(LOG_PATH, { wait: false, app: currentConfig.editor });
+    }
+    else{
+      console.log(
+        chalk.green(
+          figlet.textSync("/ Look at  _ log.log _  file /", {
+            horizontalLayout: "default",
+            verticalLayout: "default"
+          })
+        )
+      )
+    }
   }
-  else{
+  else {
     console.log(
-      chalk.green(
-        figlet.textSync("/ Look at  _ log.log _  file /", {
+      chalk.red(
+        figlet.textSync("/ Erorr /", {
           horizontalLayout: "default",
           verticalLayout: "default"
         })
       )
     )
   }
+
+  
 
 };
 

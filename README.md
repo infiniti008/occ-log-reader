@@ -41,5 +41,9 @@ Leave input empty to use saved option.
 ## Manual reading logs
 ```
 node src/index
+
+or
+
+./start.bat
 ```
 ## Logs will insert to the _log.log_ file. Open this file with code editor eg. Atom, VS Code, Web Storm, IDE.
