@@ -14,6 +14,8 @@ cd ..
 ## Run application
 ```
 Double click on occ-log-reader/start.bat
+
+Leave input empty to use saved option.
 ```
 # OR
 
