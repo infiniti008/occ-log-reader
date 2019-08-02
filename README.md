@@ -25,7 +25,7 @@
 Leave input empty to use saved option. Logs will insert to the _log.log_ file. Open this file with code editor eg. Atom, VS Code, Web Storm, IDE.
 * ### Automatical
     ```
-    Run occ-log-reader/START.bat
+    Run START.bat
     ```
 
 * ### By console
