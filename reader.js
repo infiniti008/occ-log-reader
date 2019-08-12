@@ -1,11 +1,10 @@
-function reader(config) {
+function reader(config, logPath) {
 
   const request = require('request');
   const fs = require('fs');
 
   const TOKEN_PATH = __dirname + '/token.json';
   const LOG_JSON_PATH = __dirname + '/log.json';
-  const LOG_PATH = __dirname + '/../log.log';
 
   let token = require(TOKEN_PATH);
 
@@ -86,8 +85,14 @@ function reader(config) {
   }
 
   function logCreate() {
-    var log = require(LOG_JSON_PATH);
-    fs.writeFileSync(LOG_PATH, log.fileContents);
+    if (process.env.PRODUCTION === "BAT") {
+      var log = require(LOG_JSON_PATH);
+      fs.writeFileSync(logPath, log.fileContents);
+      return Promise.resolve();
+    } 
+    else if(process.env.PRODUCTION === "VS_CODE") {
+      return Promise.resolve(log.fileContents);
+    }
     return Promise.resolve();
   }
 
