@@ -95,10 +95,10 @@ function reader(config, logPath) {
 
   let intervalId = setInterval(() => { process.stdout.write('.') }, 700)
 
-  return getToken().then(logGet).then(logCreate).then(() => {
+  return getToken().then(logGet).then(logCreate).then((data) => {
     process.stdout.write(' Finished\r\n');
     clearInterval(intervalId);
-    return Promise.resolve(true);
+    return Promise.resolve(data);
   })
   .catch(function(err){
     console.log("\r\n")
