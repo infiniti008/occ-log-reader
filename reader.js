@@ -86,14 +86,11 @@ function reader(config, logPath) {
 
   function logCreate() {
     var log = require(LOG_JSON_PATH);
-    if (process.env.PRODUCTION === "BAT" && logPath) {
+    if (logPath) {
       fs.writeFileSync(logPath, log.fileContents);
       return Promise.resolve();
     } 
-    else if(process.env.PRODUCTION === "VS_CODE") {
-      return Promise.resolve(log.fileContents);
-    }
-    return Promise.resolve();
+    return Promise.resolve(log.fileContents);
   }
 
   let intervalId = setInterval(() => { process.stdout.write('.') }, 700)
