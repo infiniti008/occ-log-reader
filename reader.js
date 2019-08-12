@@ -6,9 +6,10 @@ function reader(config, logPath) {
   const TOKEN_PATH = __dirname + '/token.json';
   const LOG_JSON_PATH = __dirname + '/log.json';
 
-  let token = require(TOKEN_PATH);
-
   function getToken() {
+
+    let token = JSON.parse(fs.readFileSync(TOKEN_PATH).toString());
+
     process.stdout.write('Reading .')
     var bodyLogin = {
       grant_type: "password",
@@ -50,7 +51,7 @@ function reader(config, logPath) {
     });
   }
 
-  function logGet(token) {
+  function logGet(updatedToken) {
     let readDate;
     if( config.date && config.date === "yesterday" ){
       let today = new Date();
@@ -68,7 +69,7 @@ function reader(config, logPath) {
       request.get({
         url: config.host + '/ccadminx/custom/v1/logs?loggingLevel=' + config.level + '&date=' + readDate,
         headers: {
-          "Authorization": 'Bearer ' + token.access_token,
+          "Authorization": 'Bearer ' + updatedToken.access_token,
           'content-type': 'application/json'
         }
       }, function (error, response, body) {
@@ -85,7 +86,7 @@ function reader(config, logPath) {
   }
 
   function logCreate() {
-    var log = require(LOG_JSON_PATH);
+    let log = JSON.parse(fs.readFileSync(LOG_JSON_PATH).toString());
     if (logPath) {
       fs.writeFileSync(logPath, log.fileContents);
       return Promise.resolve();
@@ -95,6 +96,8 @@ function reader(config, logPath) {
 
   let intervalId = setInterval(() => { process.stdout.write('.') }, 700)
 
+  fs.writeFileSync(LOG_JSON_PATH, "{}");
+  
   return getToken().then(logGet).then(logCreate).then((data) => {
     process.stdout.write(' Finished\r\n');
     clearInterval(intervalId);
