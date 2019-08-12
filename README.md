@@ -1,7 +1,5 @@
 # OCC Logs Reader
 
-![Instruction GIF](/src/instruction.gif?raw=true)
-
 ## Releases
 * [0.9.1](https://gitlab.com/vyacheslav_nikitenok/occ-log-reader/-/tags/v0.9.1)
 
