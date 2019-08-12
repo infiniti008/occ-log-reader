@@ -1,1 +1,1 @@
-npm install --cwd ".\\src" --prefix ".\\src"
+npm install
