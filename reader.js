@@ -85,8 +85,8 @@ function reader(config, logPath) {
   }
 
   function logCreate() {
-    if (process.env.PRODUCTION === "BAT") {
-      var log = require(LOG_JSON_PATH);
+    var log = require(LOG_JSON_PATH);
+    if (process.env.PRODUCTION === "BAT" && logPath) {
       fs.writeFileSync(logPath, log.fileContents);
       return Promise.resolve();
     } 
