@@ -10,10 +10,6 @@
   "author": "Vyacheslav Nikitenok",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^2.4.2",
-    "figlet": "^1.2.3",
-    "inquirer": "^6.5.0",
-    "open": "^6.4.0",
     "request": "^2.88.0"
   }
 }
