@@ -32,9 +32,10 @@ const getLogs = async (configPath, logPath) => {
   }
 
   let readFinished = await reader(config, logPath);
+
   setTimeout(() => {}, 4000);
 
-  if(readFinished){
+  if(readFinished && !readFinished.error){
     if(config.editor){
       printLogo("/ Open in Your editor /", "white");
       await open(logPath, { wait: false, app: config.editor });
@@ -43,14 +44,13 @@ const getLogs = async (configPath, logPath) => {
       printLogo("/ Look at  _ log.log _  file /", "green");
     }
   }
+  else if (readFinished.error) {
+    printLogo("/ Erorr /", "red");
+    console.log(readFinished.error.message)
+  }
   else {
     printLogo("/ Erorr /", "red");
   }
-
-  
-
 };
-
-// getLogs();
 
 module.exports = getLogs;
