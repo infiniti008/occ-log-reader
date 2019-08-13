@@ -1,44 +1,16 @@
-try{
-  var chalk = require("chalk");
-  var figlet = require("figlet");
-  var inquirer = require("inquirer");
-  var open = require('open');
-  var fs = require('fs');
-}
-catch(err){
-  setTimeout(() => {}, 4000);
-  console.error("\r\nPlease run INSTALL.bat\r\n");
-}
+const inquirer = require("inquirer");
 
-const reader = require(__dirname + '/read');
-
-const CONFIG_PATH = __dirname + '/../config.json';
-const LOG_PATH = __dirname + '/../log.log';
-
-let currentConfig = require(CONFIG_PATH);
-
-const printLogo = (text, color) => {
-  console.log(
-    chalk[color](
-      figlet.textSync(text, {
-        horizontalLayout: "default",
-        verticalLayout: "default"
-      })
-    )
-  );
-}
-
-const askQuestions = () => {
+const askQuestions = (currentConfig) => {
 
   var isDefault = { value: false };
 
-  function changeIsDefault(val){
-    if(currentConfig.host){
-      if(val === 'Yes'){
+  function changeIsDefault(val) {
+    if (currentConfig.host) {
+      if (val === 'Yes') {
         isDefault.value = true;
         return true;
       }
-      else if(val === 'No'){
+      else if (val === 'No') {
         isDefault.value = false;
         return false;
       }
@@ -47,10 +19,10 @@ const askQuestions = () => {
       isDefault.value = false;
       return false;
     }
-    
+
   }
 
-  function getIsDefault(){
+  function getIsDefault() {
     return isDefault.value;
   }
 
@@ -66,11 +38,11 @@ const askQuestions = () => {
       name: "host",
       type: "input",
       message: "What is the host? # ",
-      when: function(){
+      when: function () {
         return !getIsDefault();
       },
       filter: function (val) {
-        if(val){
+        if (val) {
           currentConfig.host = val;
         }
         return val;
@@ -84,7 +56,7 @@ const askQuestions = () => {
         return !getIsDefault();
       },
       filter: function (val) {
-        if(val){
+        if (val) {
           currentConfig.username = val;
         }
         return val;
@@ -98,7 +70,7 @@ const askQuestions = () => {
         return !getIsDefault();
       },
       filter: function (val) {
-        if(val){
+        if (val) {
           currentConfig.password = val;
         }
         return val;
@@ -113,7 +85,7 @@ const askQuestions = () => {
         return !getIsDefault();
       },
       filter: function (val) {
-        if(val){
+        if (val) {
           currentConfig.level = val;
         }
         return val;
@@ -125,7 +97,7 @@ const askQuestions = () => {
       message: "Select the log date # ",
       choices: ["today", "yesterday", "custom"],
       filter: function (val) {
-        if(val){
+        if (val) {
           currentConfig.date = val;
         }
         return val;
@@ -158,7 +130,7 @@ const askQuestions = () => {
       message: "Select prefer editor to open log file # ",
       choices: ["don't open", "atom", "code", "default", "path to the *.exe file"],
       filter: function (val) {
-        if(val && (val !== "don't open") && (val !== "default") ){
+        if (val && (val !== "don't open") && (val !== "default")) {
           currentConfig.editor = val;
           return val;
         }
@@ -166,7 +138,7 @@ const askQuestions = () => {
           currentConfig.editor = "";
           return "";
         }
-        
+
       },
       when: function () {
         return !getIsDefault();
@@ -180,7 +152,7 @@ const askQuestions = () => {
         return !getIsDefault() && (currentConfig.editor === 'path to the *.exe file');
       },
       filter: function (val) {
-        if(val){
+        if (val) {
           currentConfig.editor = val;
         }
         return val;
@@ -196,38 +168,8 @@ const askQuestions = () => {
       }
     }
   ];
+
   return inquirer.prompt(questions);
 };
 
-const run = async () => {
-
-  printLogo("/ OCC  LOGS by VN  /", "white")
-
-  const answers = await askQuestions();
-
-  if(answers.save === "Yes"){
-    console.log("Config saved");
-    fs.writeFileSync(CONFIG_PATH, JSON.stringify(currentConfig))
-  }
-
-  let readFinished = await reader(currentConfig);
-  setTimeout(() => {}, 4000);
-
-  if(readFinished){
-    if(currentConfig.editor){
-      printLogo("/ Open in Your editor /", "white");
-      await open(LOG_PATH, { wait: false, app: currentConfig.editor });
-    }
-    else{
-      printLogo("/ Look at  _ log.log _  file /", "green");
-    }
-  }
-  else {
-    printLogo("/ Erorr /", "red");
-  }
-
-  
-
-};
-
-run();
+module.exports = askQuestions;

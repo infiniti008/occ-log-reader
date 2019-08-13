@@ -1,8 +1,7 @@
 {
-  "name": "occ-log-reader",
-  "homepage": "https://gitlab.com/vyacheslav_nikitenok/occ-log-reader",
-  "email": "vyacheslav.nikitenok@vsgcommerce.com",
-  "version": "0.9.0",
+  "name": "occ-log-reader-package",
+  "email": "nikitenok.sl@gmail.com",
+  "version": "0.9.1",
   "description": "Reading logs from OCC environment.",
   "main": "index.js",
   "scripts": {
