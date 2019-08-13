@@ -6,7 +6,30 @@ function reader(config, logPath) {
   const TOKEN_PATH = __dirname + '/token.json';
   const LOG_JSON_PATH = __dirname + '/log.json';
 
-  function getToken() {
+  let tokenGetLimit = 1;
+  let tokenGetCounter;
+
+  function testConfig () {
+    console.log(config);
+    if (!config.host) {
+      return Promise.reject({message: "Host configuration is missing, please specify it."});
+    }
+    else if (!config.username) {
+      return Promise.reject({message: "Username configuration is missing, please specify it."});
+    }
+    else if (!config.password) {
+      return Promise.reject({message: "Password configuration is missing, please specify it."});
+    }
+    else if (!config.level) {
+      return Promise.reject({message: "Level configuration is missing, please specify it."});
+    }
+    else {
+      return Promise.resolve();
+    }
+  }
+
+  function getToken(force) {
+    tokenGetCounter += 1;
 
     let token = JSON.parse(fs.readFileSync(TOKEN_PATH).toString());
 
@@ -22,9 +45,10 @@ function reader(config, logPath) {
 
     let current = new Date();
     let currentMinusChanged = parseInt(current.valueOf() / 1000 - mtime.valueOf() / 1000);
-
-    return new Promise((resolve, reject) => {
-      if (!token.expires_in || currentMinusChanged >= token.expires_in) {
+    
+    if (!force || !token.expires_in || currentMinusChanged >= token.expires_in) {
+      return new Promise((resolve, reject) => {
+      
         request.post({
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           url: config.host + '/ccadmin/v1/login',
@@ -32,26 +56,28 @@ function reader(config, logPath) {
         }, function (error, response, body) {
           try{
             token = JSON.parse(body);
-            if(token.access_token){
+            if ( token.access_token ) {
               fs.writeFileSync(TOKEN_PATH, body);
-              resolve(token);
+              resolve();
             }
             else {
               reject(body);
             }
           }
           catch(e){
-            reject(body);
+            reject( { message: body } );
           }
         });
-      }
-      else {
-        resolve(token);
-      }
-    });
+      });
+    }
+    else {
+      return Promise.resolve();
+    }
+
   }
 
-  function logGet(updatedToken) {
+  function logGet() {
+    let updatedToken = JSON.parse(fs.readFileSync(TOKEN_PATH).toString());
     let readDate;
     if( config.date && config.date === "yesterday" ){
       let today = new Date();
@@ -75,7 +101,15 @@ function reader(config, logPath) {
       }, function (error, response, body) {
         if(body){
           fs.writeFileSync(LOG_JSON_PATH, body);
-          resolve();
+          let bodyParsed = JSON.parse(body);
+          if ( tokenGetCounter <= tokenGetLimit && bodyParsed.errorCode ) {
+            getToken(true).then(logGet).then(() => {
+              resolve();
+            });
+          }
+          else {
+            resolve();
+          }
         }
         else{
           reject(body);
@@ -98,16 +132,16 @@ function reader(config, logPath) {
 
   fs.writeFileSync(LOG_JSON_PATH, "{}");
   
-  return getToken().then(logGet).then(logCreate).then((data) => {
+  return testConfig().then(getToken).then(logGet).then(logCreate).then((data) => {
     process.stdout.write(' Finished\r\n');
     clearInterval(intervalId);
     return Promise.resolve(data);
   })
-  .catch(function(err){
+  .catch(function(error){
     console.log("\r\n")
-    console.log(err)
+    console.log(error)
     clearInterval(intervalId);
-    Promise.resolve(false);
+    return Promise.resolve({error});
   })
 }
 
