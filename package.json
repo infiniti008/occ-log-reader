@@ -2,14 +2,53 @@
   "name": "occ-log-reader-package",
   "email": "nikitenok.sl@gmail.com",
   "version": "0.9.3",
-  "description": "Reading logs from OCC environment.",
+  "description": "Reading logs for SSE from OCCS environment.",
   "main": "index.js",
-  "scripts": {
-    "log": "node index"
-  },
+  "scripts": {},
   "author": "Vyacheslav Nikitenok",
   "license": "ISC",
   "dependencies": {
     "request": "^2.88.0"
+  },
+  "homepage": "https://github.com/infiniti008/occ-log-reader",
+  "url" : "https://github.com/infiniti008/occ-log-reader/issues",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/infiniti008/occ-log-reader.git",
+    "directory": "master"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": false,
+      "commonjs": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+      "indent": [
+        "error",
+        2
+      ],
+      "linebreak-style": [
+          "error",
+          "windows"
+      ],
+      "quotes": [
+          "error",
+          "double"
+      ],
+      "semi": [
+          "error",
+          "always"
+      ]
+    }
   }
 }

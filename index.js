@@ -1,16 +1,15 @@
 function reader(config, logPath) {
 
-  const request = require('request');
-  const fs = require('fs');
+  const request = require("request");
+  const fs = require("fs");
 
-  const TOKEN_PATH = __dirname + '/token.json';
-  const LOG_JSON_PATH = __dirname + '/log.json';
+  const TOKEN_PATH = __dirname + "/token.json";
+  const LOG_JSON_PATH = __dirname + "/log.json";
 
   let tokenGetLimit = 1;
   let tokenGetCounter;
 
   function testConfig () {
-    console.log(config);
     if (!config.host) {
       return Promise.reject({message: "Host configuration is missing, please specify it."});
     }
@@ -32,13 +31,11 @@ function reader(config, logPath) {
     tokenGetCounter += 1;
 
     let token = JSON.parse(fs.readFileSync(TOKEN_PATH).toString());
-
-    process.stdout.write('Reading .')
     var bodyLogin = {
       grant_type: "password",
       username: config.username,
       password: config.password
-    }
+    };
 
     var stats = fs.statSync(TOKEN_PATH);
     var mtime = stats.mtime;
@@ -50,8 +47,8 @@ function reader(config, logPath) {
       return new Promise((resolve, reject) => {
       
         request.post({
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          url: config.host + '/ccadmin/v1/login',
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          url: config.host + "/ccadmin/v1/login",
           form: bodyLogin
         }, function (error, response, body) {
           try{
@@ -82,7 +79,7 @@ function reader(config, logPath) {
     if( config.date && config.date === "yesterday" ){
       let today = new Date();
       today.setDate(today.getDate() - 1);
-      readDate = today.toISOString().substr(0, 10).replace(/-/g, '');
+      readDate = today.toISOString().substr(0, 10).replace(/-/g, "");
     }
     else if( config.date && config.date === "today" ){
       readDate = "";
@@ -93,10 +90,10 @@ function reader(config, logPath) {
     
     return new Promise((resolve, reject) => {
       request.get({
-        url: config.host + '/ccadminx/custom/v1/logs?loggingLevel=' + config.level + '&date=' + readDate,
+        url: config.host + "/ccadminx/custom/v1/logs?loggingLevel=" + config.level + "&date=" + readDate,
         headers: {
-          "Authorization": 'Bearer ' + updatedToken.access_token,
-          'content-type': 'application/json'
+          "Authorization": "Bearer " + updatedToken.access_token,
+          "content-type": "application/json"
         }
       }, function (error, response, body) {
         if(body){
@@ -128,21 +125,14 @@ function reader(config, logPath) {
     return Promise.resolve(log.fileContents);
   }
 
-  let intervalId = setInterval(() => { process.stdout.write('.') }, 700)
-
   fs.writeFileSync(LOG_JSON_PATH, "{}");
   
   return testConfig().then(getToken).then(logGet).then(logCreate).then((data) => {
-    process.stdout.write(' Finished\r\n');
-    clearInterval(intervalId);
     return Promise.resolve(data);
   })
-  .catch(function(error){
-    console.log("\r\n")
-    console.log(error)
-    clearInterval(intervalId);
-    return Promise.resolve({error});
-  })
+    .catch(function(error){
+      return Promise.resolve({error});
+    });
 }
 
 module.exports = reader;
