@@ -1,4 +1,4 @@
-const getLogs = require("occ-log-reader-package");
+const getLogs = require(__dirname + "/src");
 process.env.PRODUCTION = "BAT";
 
 const LOG_PATH = __dirname + "/log.log";
