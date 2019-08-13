@@ -6,7 +6,7 @@ function reader(config, logPath) {
   const TOKEN_PATH = __dirname + "/token.json";
   const LOG_JSON_PATH = __dirname + "/log.json";
 
-  let tokenGetLimit = 1;
+  let tokenGetLimit = 2;
   let tokenGetCounter;
 
   function testConfig () {
@@ -99,7 +99,7 @@ function reader(config, logPath) {
         if(body){
           fs.writeFileSync(LOG_JSON_PATH, body);
           let bodyParsed = JSON.parse(body);
-          if ( tokenGetCounter <= tokenGetLimit && bodyParsed.errorCode ) {
+          if ( tokenGetCounter < tokenGetLimit && bodyParsed.errorCode ) {
             getToken(true).then(logGet).then(() => {
               resolve();
             });

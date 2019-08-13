@@ -1,7 +1,7 @@
 {
   "name": "occ-log-reader-package",
   "email": "nikitenok.sl@gmail.com",
-  "version": "0.9.3",
+  "version": "1.0.0",
   "description": "Reading logs for SSE from OCCS environment.",
   "main": "index.js",
   "scripts": {},
