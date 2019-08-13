@@ -1,7 +1,7 @@
 {
   "name": "occ-log-reader-package",
   "email": "nikitenok.sl@gmail.com",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Reading logs from OCC environment.",
   "main": "index.js",
   "scripts": {
