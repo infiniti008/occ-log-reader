@@ -18,7 +18,7 @@ const getLogs = async (configPath, logPath) => {
 
   let config = require(configPath);
 
-  const reader = require("occ-log-reader-package/reader");
+  const reader = require("occ-log-reader-package");
 
   const askTerminal = require(__dirname + "/ask-terminal");
 
