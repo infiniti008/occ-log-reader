@@ -2,3 +2,6 @@ node_modules
 log.json
 log.log
 package-lock.json
+*.vsix
+.vscode
+.vscodeignore
