@@ -1,7 +1,7 @@
 var chalk = require("chalk");
 var figlet = require("figlet");
-var open = require('open');
-var fs = require('fs');
+var open = require("open");
+var fs = require("fs");
 
 const printLogo = (text, color) => {
   console.log(
@@ -12,7 +12,7 @@ const printLogo = (text, color) => {
       })
     )
   );
-}
+};
 
 const getLogs = async (configPath, logPath) => {
 
@@ -22,13 +22,13 @@ const getLogs = async (configPath, logPath) => {
 
   const askTerminal = require(__dirname + "/ask-terminal");
 
-  printLogo("/ OCC  LOGS by VN  /", "white")
+  printLogo("/ OCC  LOGS by VN  /", "white");
 
   const answers = await askTerminal(config);
 
   if(answers.save === "Yes"){
     console.log("Config saved");
-    fs.writeFileSync(configPath, JSON.stringify(config))
+    fs.writeFileSync(configPath, JSON.stringify(config));
   }
 
   let readFinished = await reader(config, logPath);
@@ -46,7 +46,7 @@ const getLogs = async (configPath, logPath) => {
   }
   else if (readFinished.error) {
     printLogo("/ Erorr /", "red");
-    console.log(readFinished.error.message)
+    console.log(readFinished.error.message);
   }
   else {
     printLogo("/ Erorr /", "red");

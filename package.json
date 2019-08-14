@@ -18,5 +18,14 @@
     "figlet": "^1.2.3",
     "inquirer": "^6.5.0",
     "open": "^6.4.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/infiniti008-eslint-config",
+      "./node_modules/infiniti008-eslint-config/ext/node"
+    ]
+  },
+  "devDependencies": {
+    "infiniti008-eslint-config": "git+https://github.com/infiniti008/eslint-config.git"
   }
 }

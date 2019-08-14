@@ -6,11 +6,11 @@ const askQuestions = (currentConfig) => {
 
   function changeIsDefault(val) {
     if (currentConfig.host) {
-      if (val === 'Yes') {
+      if (val === "Yes") {
         isDefault.value = true;
         return true;
       }
-      else if (val === 'No') {
+      else if (val === "No") {
         isDefault.value = false;
         return false;
       }
@@ -111,7 +111,7 @@ const askQuestions = (currentConfig) => {
       type: "input",
       message: "Write the LOG DATE? (Format: YYYYMMDD) # ",
       when: function () {
-        return !getIsDefault() && (currentConfig.date === 'custom');
+        return !getIsDefault() && (currentConfig.date === "custom");
       },
       filter: function (val) {
         let formatIsCorrect = /\d\d\d\d\d\d\d\d/.test(val);
@@ -120,7 +120,7 @@ const askQuestions = (currentConfig) => {
           return val;
         } else {
           currentConfig.date = "";
-          return ""
+          return "";
         }
       }
     },
@@ -149,7 +149,7 @@ const askQuestions = (currentConfig) => {
       type: "input",
       message: "Path to the editor *.exe # ",
       when: function () {
-        return !getIsDefault() && (currentConfig.editor === 'path to the *.exe file');
+        return !getIsDefault() && (currentConfig.editor === "path to the *.exe file");
       },
       filter: function (val) {
         if (val) {
