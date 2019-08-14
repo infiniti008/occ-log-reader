@@ -37,7 +37,9 @@
 			}
 		]
 	},
-	"scripts": {},
+	"scripts": {
+		"build": "vsce package"
+	},
 	"dependencies": {
 		"occ-log-reader-package": "git+https://github.com/infiniti008/occ-log-reader.git#semver:^v1.0.0"
 	},
@@ -54,5 +56,9 @@
 			"./node_modules/infiniti008-eslint-config",
 			"./node_modules/infiniti008-eslint-config/ext/node"
 		]
-	}
+	},
+	"repository": {
+		"type" : "git",
+		"url" : "https://github.com/infiniti008/occ-log-reader.git#vscode-pkg"
+	  }
 }
